@@ -94,7 +94,7 @@ def Activate(request, uidb64, token):
         user.is_active = True
         user.save()
         print('User activated successfully.')
-        return HttpResponseRedirect('http://localhost:5173/login')
+        return HttpResponseRedirect('https://kake-frontend-25veqpkl9-hannas-projects-70800ae4.vercel.app/login')
     else:
         # Return a response indicating that activation failed
         return Response({'message': 'Activation failed'}, status=status.HTTP_400_BAD_REQUEST)
