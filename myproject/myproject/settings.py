@@ -24,10 +24,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config('secret_key')
+
 SECRET_KEY = 'django-insecure-%vh7pw(1)(ub7m=fb04hfs+79wh@ker$b-tneeae$6v)rd*=_y'
 
 # SECURITY WARNING: don't run with debug turned on in production!
+
 DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
@@ -74,9 +75,10 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
 ]
+RAZORPAY_KEY_ID=config('RAZORPAY_KEY')
 
-RAZORPAY_KEY_ID='rzp_test_tgCvOVZCwscP6c'
-RAZORPAY_SECRET_KEY='W2YofbbI4LVREfIAlPtqti6U'
+RAZORPAY_SECRET_KEY=config('RAZORPAY_SECRET')
+
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=90 ),
@@ -122,38 +124,27 @@ SIMPLE_JWT = {
 
 CORS_ALLOW_ALL_ORIGINS = True
 
-# CORS_ALLOWED_ORIGINS = [
-#     "http://127.0.0.1:5173",
-#     "http://localhost:5173",
-#     'http://127.0.0.1:5173',
-# ]
+CORS_ALLOWED_ORIGINS = [
+    "http://127.0.0.1:5173",
+    "http://localhost:5173",
+    'http://127.0.0.1:5173',
+]
 
 
 ROOT_URLCONF = 'myproject.urls'
 
-# CHANNEL_LAYERS = {
-#     "default": {
-#         "BACKEND": "http://127.0.0.1:8000",
-#         "CONFIG": {
-#             "hosts": [("127.0.0.1", 6379)],
-#         },
-#     },
-# }
+
 
 CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
         "CONFIG": {
-            "hosts": [(config('redis'))],
+            "hosts": [(config('REDIS_SERVER_NAME'))],
         },
     },
 }
 
-# CHANNEL_LAYERS = {
-#     "default": {
-#         "BACKEND": "channels.layers.InMemoryChannelLayer",
-#     },
-# }
+
 
 TEMPLATES = [
     {
@@ -175,19 +166,18 @@ ASGI_APPLICATION = 'myproject.asgi.application'
 
 
 # Database
-
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'kake',
-        'USER':'postgres',
-        'PASSWORD':'hanna',
-        'HOST':'Localhost'
-
+        'NAME': config('DB_NAME'),
+        'USER': config('DB_USER'),
+        'PASSWORD':config('DB_PASSWORD'),
+        'HOST':config('DB_HOST')
     }
 }
-DATABASES['default'] = dj_database_url.parse("postgres://kake_user:FcjBDncUySPZ5VrEG7QmvdoRd356omst@dpg-clo7f9v5felc73a3heng-a.oregon-postgres.render.com/kake")
+
+#
+# DATABASES['default'] = dj_database_url.parse("postgres://kake_user:FcjBDncUySPZ5VrEG7QmvdoRd356omst@dpg-clo7f9v5felc73a3heng-a.oregon-postgres.render.com/kake")
 # 
 
 
@@ -201,12 +191,13 @@ AUTH_USER_MODEL = 'app.UserAccount'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 
+
+
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'fathimahannam369@gmail.com'
-EMAIL_HOST_PASSWORD ='slaspysvzddvghrm'
+EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 EMAIL_USE_TLS = True
-
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
