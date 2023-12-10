@@ -39,7 +39,7 @@ def get_bakers(request):
 @api_view(['POST'])
 def baker_application_view(request):
     if request.method == 'POST':
-        print(request.data)
+        print("=----",request.data)
         serializer = BakerApplicationSerializer(data=request.data)
         
         if serializer.is_valid():
@@ -263,7 +263,6 @@ def baker_orders(request, baker_id):
 
     return JsonResponse({'orders': data})
 
-
 class OrderStatusView(APIView):
     def patch(self, request, baker_id, order_id):
         print("The baker_id: ", baker_id)
@@ -271,23 +270,22 @@ class OrderStatusView(APIView):
 
         if request.method == 'PATCH':
             new_status_data = request.data.get('status')
-            
-            # Check if new_status_data is a dictionary with 'undefined' key
-            if isinstance(new_status_data, dict) and 'undefined' in new_status_data:
-                # Extract the value associated with 'undefined' key
-                new_status = new_status_data['undefined']
+
+            # Check if new_status_data is a dictionary
+            if isinstance(new_status_data, dict):
+                # Get the first value in the dictionary (assuming there's only one key-value pair)
+                new_status = next(iter(new_status_data.values()), None)
             else:
                 # If 'status' is not a dictionary, use it directly
                 new_status = new_status_data
-            
+
             print(new_status, "=========")
-            
-            
+
             order = get_object_or_404(Order, id=order_id)
             print(order)
+
             order.status = new_status
             order.save()
             return JsonResponse({'message': 'Status updated successfully'})
         else:
             return JsonResponse({'error': 'Invalid request method'}, status=400)
-

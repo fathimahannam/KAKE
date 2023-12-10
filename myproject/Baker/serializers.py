@@ -10,8 +10,8 @@ class BakerSerializer(serializers.ModelSerializer):
             'name',
             'email',
             'location',
-            'image',
             'phoneNumber',
+            'image',
             'is_active',
         )
 
