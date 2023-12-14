@@ -54,6 +54,8 @@ INSTALLED_APPS = [
     'Baker',
     'chat',
     'channels',
+    'cloudinary_storage',
+    'cloudinary',
     
 ]
 REST_FRAMEWORK = {
@@ -174,6 +176,11 @@ DATABASES = {
         'PASSWORD':config('DB_PASSWORD'),
         'HOST':config('DB_HOST')
     }
+}
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': config('CLOUDINARY_CLOUD_NAME'),
+    'API_KEY':  config('CLOUDINARY_API_KEY'),
+    'API_SECRET':  config('CLOUDINARY_API_SECRET'),
 }
 
 #
