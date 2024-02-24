@@ -137,15 +137,22 @@ ROOT_URLCONF = 'myproject.urls'
 
 
 
+# CHANNEL_LAYERS = {
+#     "default": {
+#         "BACKEND": "channels_redis.core.RedisChannelLayer",
+#         "CONFIG": {
+#             "hosts": [(config('REDIS_SERVER_NAME'))],
+#         },
+#     },
+# }
 CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
         "CONFIG": {
-            "hosts": [(config('REDIS_SERVER_NAME'))],
+            "hosts": [("127.0.0.1", 6379)],
         },
     },
 }
-
 
 
 TEMPLATES = [
